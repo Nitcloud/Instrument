@@ -23,7 +23,6 @@ always @(posedge clk_in) begin
 	addr_r1 <= addr_r0 + Pha_word;
 end
 
-
 always @(posedge clk_in ) begin
 	wave_out_saw_r <= addr_r1[PHASE_WIDTH - 1 : PHASE_WIDTH - OUTPUT_WIDTH];
 end
