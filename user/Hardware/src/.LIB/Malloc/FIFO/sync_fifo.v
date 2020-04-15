@@ -1,6 +1,7 @@
 `timescale  1ns/1ps
 module sync_fifo #(
-   parameter W = 8
+	parameter W = 8,
+	parameter D = 4
 )
 (
 	input 	    		clk, 
@@ -13,8 +14,6 @@ module sync_fifo #(
 	output reg  		empty
 );
 
-parameter D = 4;
-
 parameter AW  = (D == 4)   ? 2 :
 				(D == 8)   ? 3 :
 				(D == 16)  ? 4 :
@@ -26,12 +25,11 @@ parameter AW  = (D == 4)   ? 2 :
 // synopsys translate_off
 initial begin
 	if (AW == 0) begin
-	$display ("%m : ERROR!!! Fifo depth %d not in range 4 to 256", D);
+		$display ("%m : ERROR!!! Fifo depth %d not in range 4 to 256", D);
 	end // if (AW == 0)
 end // initial begin
 
 // synopsys translate_on
-
 reg [W-1 : 0]    mem[D-1 : 0];
 reg [AW-1 : 0]   rd_ptr, wr_ptr;
    
@@ -41,7 +39,7 @@ always @ (posedge clk or negedge reset_n)
 	end
 	else begin
 		if (wr_en & !full) begin
-		wr_ptr <= wr_ptr + 1'b1 ;
+			wr_ptr <= wr_ptr + 1'b1 ;
 		end
 	end
 
@@ -51,7 +49,7 @@ always @ (posedge clk or negedge reset_n)
 	end
 	else begin
 		if (rd_en & !empty) begin
-		rd_ptr <= rd_ptr + 1'b1 ;
+			rd_ptr <= rd_ptr + 1'b1 ;
 		end
 	end
 
