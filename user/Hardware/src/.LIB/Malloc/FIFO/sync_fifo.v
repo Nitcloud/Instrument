@@ -2,8 +2,7 @@
 module sync_fifo #(
 	parameter W = 8,
 	parameter D = 4
-)
-(
+) (
 	input 	    		clk, 
 	input				reset_n, 
 	input				rd_en,

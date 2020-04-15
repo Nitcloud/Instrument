@@ -3,7 +3,8 @@
 //-----------------------------------------------
 `timescale  1ns/1ps
 module async_fifo #(
-   parameter W = 4'd8
+	parameter W  = 4'd8,
+	parameter D  = 3'd4
 ) (
 	//timing for wr
 	input				wr_clk, 
@@ -21,31 +22,30 @@ module async_fifo #(
 	output [W-1 : 0]	rd_data
 );
 
-parameter DP       = 3'd4;
 parameter WR_FAST  = 1'b1;
 parameter RD_FAST  = 1'b1;
 parameter EMPTY_DP = 1'b0;
-parameter FULL_DP  = DP;
+parameter FULL_DP  = D;
 
-parameter AW =  (DP == 2)   ? 1 : 
-				(DP == 4)   ? 2 :
-				(DP == 8)   ? 3 :
-				(DP == 16)  ? 4 :
-				(DP == 32)  ? 5 :
-				(DP == 64)  ? 6 :
-				(DP == 128) ? 7 :
-				(DP == 256) ? 8 : 0;
+parameter AW =  (D == 2)   ? 1 : 
+				(D == 4)   ? 2 :
+				(D == 8)   ? 3 :
+				(D == 16)  ? 4 :
+				(D == 32)  ? 5 :
+				(D == 64)  ? 6 :
+				(D == 128) ? 7 :
+				(D == 256) ? 8 : 0;
 // synopsys translate_off
 
 initial begin
 	if (AW == 0) begin
-		$display ("%m : ERROR!!! Fifo depth %d not in range 2 to 256", DP);
+		$display ("%m : ERROR!!! Fifo depth %d not in range 2 to 256", D);
 	end // if (AW == 0)
 end // initial begin
 
 // synopsys translate_on
 
-reg [W-1 : 0]    mem[DP-1 : 0];
+reg [W-1 : 0]    mem[D-1 : 0];
 
 /*********************** write side ************************/
 reg  [AW:0] sync_rd_ptr_0, sync_rd_ptr_1; 
@@ -253,7 +253,7 @@ begin
 		get_cnt = (wr_ptr - rd_ptr);	
 	end
 	else begin
-		get_cnt = DP*2 - (rd_ptr - wr_ptr);
+		get_cnt = D*2 - (rd_ptr - wr_ptr);
 	end
 end
 endfunction
