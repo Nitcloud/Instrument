@@ -1,15 +1,15 @@
 `timescale 1 ns / 1 ps
 
-module AXI_AWG #(
+module AXI_Modulate #(
 	parameter integer OUTPUT_WIDTH      	= 12,
 	parameter integer PHASE_WIDTH        	= 32,
 	parameter integer C_S_AXI_DATA_WIDTH	= 32,
-	parameter integer C_S_AXI_ADDR_WIDTH	= 4
+	parameter integer C_S_AXI_ADDR_WIDTH	= 5
 ) (
 	// Users to add ports here
 	input                           clk_in,
 
-	output [OUTPUT_WIDTH - 1 : 0]   AWG_OUT,
+	output [OUTPUT_WIDTH - 1 : 0]   Wave_OUT,
 	// User ports ends
 	// Do not modify the ports beyond this line
 

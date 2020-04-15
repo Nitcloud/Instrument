@@ -1,56 +1,31 @@
-/***************************************************************************
-DAC_PWM DAC_PWM_CH1(
-    .clk_in(clk_500m),
-    .RST(0),
-    .data_in({Demodule_OUT[18:0],13'd0}),
-    .DAC_PWM(DAC_CH1)
-);
-***************************************************************************/
-module DDS_Gen #(
+`timescale 1ns / 1ps
+module Pulse_Gen #(
 	parameter OUTPUT_WIDTH = 12,
 	parameter PHASE_WIDTH  = 32
 ) (
     input                         clk_in,
-    input  [PHASE_WIDTH  - 1 : 0] Fre_word,
-    input  [PHASE_WIDTH  - 1 : 0] Pha_word,
-    output [OUTPUT_WIDTH - 1 : 0] wave_out_sin,
-	output [OUTPUT_WIDTH - 1 : 0] wave_out_tri,
-	output [OUTPUT_WIDTH - 1 : 0] wave_out_saw
-);
-endmodule
-
-module Pulse_Gen
-(
-    input                clk_in,
-    input                RST,
-    input  signed [31:0] data_in,
-    output               DAC_PWM
+    input                         RST,
+	input  [PHASE_WIDTH  - 1 : 0] Fre_word,
+	input  [PHASE_WIDTH  - 1 : 0] Pha_word,
+	input  [PHASE_WIDTH  - 1 : 0] Duty_word,
+    output [OUTPUT_WIDTH - 1 : 0] Pulse_out
 );
 
-
-parameter  MAIN_FRE = 500;
-localparam FRE_WORD = 32'd2147483648/MAIN_FRE;
-
-reg  [31:0] addr_r = 0;
+reg  [PHASE_WIDTH - 1 : 0] addr_r0 = 0;
+reg  [PHASE_WIDTH - 1 : 0] addr_r1 = 0;
 always @(posedge clk_in) begin
 	if (RST) begin
-		addr_r <= 32'd0;
+		addr_r0 <= 0;
+		addr_r1 <= 0;
 	end
 	else begin
-		addr_r <= addr_r + FRE_WORD;
+		addr_r0 <= addr_r0 + Fre_word;
+		addr_r1 <= addr_r0 + Pha_word;
 	end
 end
 
-reg  [31:0] duty_r = 0;
-always @(posedge clk_in) begin
-	if (RST) begin
-		duty_r <= 32'd0;
-	end
-	else begin
-		duty_r <= $signed(data_in) + 32'd2147483648;
-	end
-end
-
-assign DAC_PWM = (addr_r <= duty_r) ? 1'b1 : 1'b0;
+wire Pulse_bit;
+assign Pulse_bit = (addr_r1 <= Duty_word) ? 1'b1 : 1'b0;
+assign Pulse_out = {Pulse_bit,{(OUTPUT_WIDTH-1){~Pulse_bit}}};
 
 endmodule
