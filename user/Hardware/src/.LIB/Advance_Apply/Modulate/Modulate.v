@@ -1,6 +1,7 @@
 module Modulate #(
 	parameter    INPUT_WIDTH  = 12,
 	parameter    OUTPUT_WIDTH = 12,
+	parameter    DEEP_WIDTH   = 16,
 	parameter 	 PHASE_WIDTH  = 32
 ) (
 	input                           			clk_in,
@@ -12,7 +13,7 @@ module Modulate #(
 	input  [PHASE_WIDTH  - 1 : 0]               AM_Center_Fre,
 
 	input  [PHASE_WIDTH  - INPUT_WIDTH - 1 : 0] move_fre,
-	input  [15:0]								module_deep,
+	input  [15:0]								modulate_deep,
 
 	input  [INPUT_WIDTH - 1 : 0]    			Inside_Wave,
 	input  [INPUT_WIDTH - 1 : 0]    			Outside_Wave,
@@ -50,14 +51,15 @@ FM_Modulate #(
 
 wire 	AM_RST = RST & (~Sel[1]);
 AM_Modulate #(
-    .INPUT_WIDTH  ( INPUT_WIDTH  ),
     .PHASE_WIDTH  ( PHASE_WIDTH  ),
+	.DEEP_WIDTH   ( DEEP_WIDTH   ),
+    .INPUT_WIDTH  ( INPUT_WIDTH  ),
     .OUTPUT_WIDTH ( OUTPUT_WIDTH )
 ) u_AM_Modulate (
     .clk_in                  ( clk_in        ),
     .RST                     ( AM_RST        ),
     .wave_in                 ( Wave_IN       ),
-    .module_deep             ( module_deep   ),
+    .modulate_deep           ( modulate_deep ),
     .center_fre              ( AM_Center_Fre ),
 
     .AM_wave                 ( AM_wave       )

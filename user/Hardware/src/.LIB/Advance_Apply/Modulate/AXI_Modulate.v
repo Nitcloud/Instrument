@@ -3,12 +3,16 @@
 module AXI_Modulate #(
 	parameter integer INPUT_WIDTH       	= 12,
 	parameter integer OUTPUT_WIDTH      	= 12,
+	parameter integer DEEP_WIDTH         	= 16,
 	parameter integer PHASE_WIDTH       	= 32,
 	parameter integer C_S_AXI_DATA_WIDTH	= 32,
 	parameter integer C_S_AXI_ADDR_WIDTH	= 5
 ) (
 	// Users to add ports here
 	input                           clk_in,
+
+	input  [INPUT_WIDTH - 1 : 0]    Inside_Wave,
+	input  [INPUT_WIDTH - 1 : 0]    Outside_Wave,
 
 	output [OUTPUT_WIDTH - 1 : 0]   wave_out,
 	// User ports ends
@@ -307,17 +311,18 @@ end
 // Add user logic here
 localparam MOVE_FRE_WIDTH = PHASE_WIDTH  - INPUT_WIDTH;
 Modulate #(
-    .INPUT_WIDTH  ( 12 ),
-    .OUTPUT_WIDTH ( 12 ),
-    .PHASE_WIDTH  ( 32 ))
- u_Modulate (
+    .INPUT_WIDTH  ( INPUT_WIDTH  ),
+    .OUTPUT_WIDTH ( OUTPUT_WIDTH ),
+	.DEEP_WIDTH   ( DEEP_WIDTH   ),
+    .PHASE_WIDTH  ( PHASE_WIDTH  )
+) u_Modulate (
     .clk_in                  ( clk_in                       ),
     .RST                     ( ~S_AXI_ARESETN               ),
     .Sel                     ( slv_reg0[2:0]                ),
     .FM_Center_Fre           ( slv_reg1[PHASE_WIDTH-1:0]    ),
     .AM_Center_Fre           ( slv_reg2[PHASE_WIDTH-1:0]    ),
-    .move_fre                ( slv_reg3[MOVE_FRE_WIDTH-1:0] ),
-    .module_deep             ( slv_reg4[15:0]               ),
+    .modulate_deep           ( slv_reg3[DEEP_WIDTH-1:0]     ),
+    .move_fre                ( slv_reg4[MOVE_FRE_WIDTH-1:0] ),
     .Inside_Wave             ( Inside_Wave                  ),
     .Outside_Wave            ( Outside_Wave                 ),
 
