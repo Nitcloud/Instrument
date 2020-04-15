@@ -1,37 +1,20 @@
-/***************************************************************************
-wire        [11:0] AM_wave;
-AM_Module_V2 #
-(
-    .INPUT_WIDTH(12),
-    .PHASE_WIDTH(32),
-    .OUTPUT_WIDTH(12)
-)
-AM_Module_V2_u(
-    .clk_in(clk_sys),
-    .RST(1'b0),
-    .wave_in(sin_wave),
-    .module_deep(16'd32768),       //(2^16-1)*percent
-    .center_fre(32'd229780750),    //(fre*4294967296)/clk_in/1000000
-    .AM_wave(AM_wave)
-);
-***************************************************************************/
 `timescale 1ns / 1ps
+
 module AM_Modulate #
 (
     parameter INPUT_WIDTH  = 12,
     parameter PHASE_WIDTH  = 32,
+	parameter DEEP_WIDTH   = 16,
     parameter OUTPUT_WIDTH = 12
 )
 (
     input                         clk_in,
     input                         RST,
     input  [INPUT_WIDTH - 1 : 0]  wave_in,
-    input  [15:0]                 module_deep,
-    input  [PHASE_WIDTH - 1 : 0]  center_fre,
+    input  [PHASE_WIDTH - 1 : 0]  center_fre,   //(fre*2^PHASE_WIDTH)/clk_in/1000000
+    input  [DEEP_WIDTH - 1 : 0]   modulate_deep,//(2^DEEP_WIDTH-1)*percent   
     output [OUTPUT_WIDTH - 1 : 0] AM_wave
 );
-
-
 
 reg        [INPUT_WIDTH  - 1 : 0] wave_in_r = 0;
 always @(posedge clk_in) begin
@@ -43,13 +26,13 @@ always @(posedge clk_in) begin
     end
 end
 
-reg signed [INPUT_WIDTH + 16 : 0] data_r0 = 0;
+reg signed [INPUT_WIDTH + DEEP_WIDTH : 0] data_r0 = 0;
 always @(posedge clk_in) begin
     if (RST) begin
         data_r0 <= 0;
     end
     else begin
-        data_r0 <= $signed(wave_in_r) * $signed({1'd0,module_deep});
+        data_r0 <= $signed(wave_in_r) * $signed({1'd0,modulate_deep});
     end
 end
 

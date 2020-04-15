@@ -1,15 +1,16 @@
 `timescale 1 ns / 1 ps
 
 module AXI_Modulate #(
+	parameter integer INPUT_WIDTH       	= 12,
 	parameter integer OUTPUT_WIDTH      	= 12,
-	parameter integer PHASE_WIDTH        	= 32,
+	parameter integer PHASE_WIDTH       	= 32,
 	parameter integer C_S_AXI_DATA_WIDTH	= 32,
 	parameter integer C_S_AXI_ADDR_WIDTH	= 5
 ) (
 	// Users to add ports here
 	input                           clk_in,
 
-	output [OUTPUT_WIDTH - 1 : 0]   Wave_OUT,
+	output [OUTPUT_WIDTH - 1 : 0]   wave_out,
 	// User ports ends
 	// Do not modify the ports beyond this line
 
@@ -75,6 +76,7 @@ reg  [C_S_AXI_DATA_WIDTH-1:0] slv_reg0;
 reg  [C_S_AXI_DATA_WIDTH-1:0] slv_reg1;
 reg  [C_S_AXI_DATA_WIDTH-1:0] slv_reg2;
 reg  [C_S_AXI_DATA_WIDTH-1:0] slv_reg3;
+reg  [C_S_AXI_DATA_WIDTH-1:0] slv_reg4;
 reg  [C_S_AXI_DATA_WIDTH-1:0] reg_data_out;
 
 integer	                      byte_index;
@@ -249,25 +251,30 @@ always @( posedge S_AXI_ACLK ) begin
 		slv_reg1 <= 0;
 		slv_reg2 <= 0;
 		slv_reg3 <= 0;
+		slv_reg4 <= 0;
 	end
 	else begin
 		if (slv_reg_wren) begin
 			case ( axi_awaddr[ADDR_LSB+OPT_MEM_ADDR_BITS:ADDR_LSB] )
-				4'd0:for ( byte_index = 0; byte_index <= (C_S_AXI_DATA_WIDTH/8)-1; byte_index = byte_index+1 )
+				3'd0:for ( byte_index = 0; byte_index <= (C_S_AXI_DATA_WIDTH/8)-1; byte_index = byte_index+1 )
 						if ( S_AXI_WSTRB[byte_index] == 1 ) begin
 							slv_reg0[(byte_index*8) +: 8] <= S_AXI_WDATA[(byte_index*8) +: 8];
 						end
-				4'd1:for ( byte_index = 0; byte_index <= (C_S_AXI_DATA_WIDTH/8)-1; byte_index = byte_index+1 )
+				3'd1:for ( byte_index = 0; byte_index <= (C_S_AXI_DATA_WIDTH/8)-1; byte_index = byte_index+1 )
 						if ( S_AXI_WSTRB[byte_index] == 1 ) begin
 							slv_reg1[(byte_index*8) +: 8] <= S_AXI_WDATA[(byte_index*8) +: 8];
 						end 
-				4'd2:for ( byte_index = 0; byte_index <= (C_S_AXI_DATA_WIDTH/8)-1; byte_index = byte_index+1 )
+				3'd2:for ( byte_index = 0; byte_index <= (C_S_AXI_DATA_WIDTH/8)-1; byte_index = byte_index+1 )
 						if ( S_AXI_WSTRB[byte_index] == 1 ) begin
 							slv_reg2[(byte_index*8) +: 8] <= S_AXI_WDATA[(byte_index*8) +: 8];
 						end
-				4'd3:for ( byte_index = 0; byte_index <= (C_S_AXI_DATA_WIDTH/8)-1; byte_index = byte_index+1 )
+				3'd3:for ( byte_index = 0; byte_index <= (C_S_AXI_DATA_WIDTH/8)-1; byte_index = byte_index+1 )
 						if ( S_AXI_WSTRB[byte_index] == 1 ) begin
 							slv_reg3[(byte_index*8) +: 8] <= S_AXI_WDATA[(byte_index*8) +: 8];
+						end
+				3'd4:for ( byte_index = 0; byte_index <= (C_S_AXI_DATA_WIDTH/8)-1; byte_index = byte_index+1 )
+						if ( S_AXI_WSTRB[byte_index] == 1 ) begin
+							slv_reg4[(byte_index*8) +: 8] <= S_AXI_WDATA[(byte_index*8) +: 8];
 						end
 				default : 
 					begin
@@ -275,6 +282,7 @@ always @( posedge S_AXI_ACLK ) begin
 						slv_reg1 <= slv_reg1;
 						slv_reg2 <= slv_reg2;
 						slv_reg3 <= slv_reg3;
+						slv_reg4 <= slv_reg4;
 					end
 			endcase
 		end
@@ -287,32 +295,35 @@ end
 assign slv_reg_rden = axi_arready & S_AXI_ARVALID & ~axi_rvalid;
 always @(*) begin
 	case ( axi_araddr[ADDR_LSB+OPT_MEM_ADDR_BITS:ADDR_LSB] )
-		4'd0 : reg_data_out <= slv_reg0;
-		4'd1 : reg_data_out <= slv_reg1;
-		4'd2 : reg_data_out <= slv_reg2;
-		4'd3 : reg_data_out <= slv_reg3;
+		3'd0 : reg_data_out <= slv_reg0;
+		3'd1 : reg_data_out <= slv_reg1;
+		3'd2 : reg_data_out <= slv_reg2;
+		3'd3 : reg_data_out <= slv_reg3;
+		3'd3 : reg_data_out <= slv_reg4;
 		default : reg_data_out <= 0;
 	endcase
 end
   
 // Add user logic here
+localparam MOVE_FRE_WIDTH = PHASE_WIDTH  - INPUT_WIDTH;
+Modulate #(
+    .INPUT_WIDTH  ( 12 ),
+    .OUTPUT_WIDTH ( 12 ),
+    .PHASE_WIDTH  ( 32 ))
+ u_Modulate (
+    .clk_in                  ( clk_in                       ),
+    .RST                     ( ~S_AXI_ARESETN               ),
+    .Sel                     ( slv_reg0[2:0]                ),
+    .FM_Center_Fre           ( slv_reg1[PHASE_WIDTH-1:0]    ),
+    .AM_Center_Fre           ( slv_reg2[PHASE_WIDTH-1:0]    ),
+    .move_fre                ( slv_reg3[MOVE_FRE_WIDTH-1:0] ),
+    .module_deep             ( slv_reg4[15:0]               ),
+    .Inside_Wave             ( Inside_Wave                  ),
+    .Outside_Wave            ( Outside_Wave                 ),
 
-AWG #(
-    .OUTPUT_WIDTH ( OUTPUT_WIDTH ),
-    .PHASE_WIDTH  ( PHASE_WIDTH  )
-) u_AWG (
-    .clk_in              ( clk_in          ),
-    .RST                 ( ~S_AXI_ARESETN  ),
-
-    .Fre_word            ( slv_reg0[PHASE_WIDTH-1:0]                 ),
-    .Pha_word            ( slv_reg1[PHASE_WIDTH-1:0]                 ),
-    .Duty_word           ( slv_reg2[PHASE_WIDTH-1:0]                 ),
-    .Amp_word            ( slv_reg3[OUTPUT_WIDTH-1:0]                ),
-    .DC_Value            ( slv_reg3[OUTPUT_WIDTH*2-1:OUTPUT_WIDTH]   ),
-    .AWG_Type            ( slv_reg3[OUTPUT_WIDTH*2+2:OUTPUT_WIDTH*2] ),
-
-    .AWG_OUT             ( AWG_OUT         )
+    .wave_out                ( wave_out                     )
 );
+
 // User logic ends
 
 endmodule

@@ -80,12 +80,12 @@ MUX2_1 #(
     .INPUT_WIDTH  ( OUTPUT_WIDTH ),
     .OUTPUT_WIDTH ( OUTPUT_WIDTH )
 ) u3_MUX2_1 (
-    .RST                     ( RST          ),
-    .Sel                     ( Sel[2]       ),
-    .CH_IN1                  ( Inside_Wave  ),
-    .CH_IN2                  ( Modulate_OUT ),
+	.RST                     ( RST           ),
+	.Sel                     ( Sel[2]|Sel[0] ),
+	.CH_IN1                  ( Inside_Wave   ),
+	.CH_IN2                  ( Modulate_OUT  ),
 
-    .CH_out                  ( wave_out     )
+	.CH_out                  ( wave_out      )
 );
 
 endmodule  //Modulate
