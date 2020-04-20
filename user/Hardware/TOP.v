@@ -1,6 +1,30 @@
 `timescale 1ns / 1ps
 
 module TOP(
+	//ps interface
+	inout [14:0]DDR_addr,
+	inout [2:0]DDR_ba,
+	inout DDR_cas_n,
+	inout DDR_ck_n,
+	inout DDR_ck_p,
+	inout DDR_cke,
+	inout DDR_cs_n,
+	inout [3:0]DDR_dm,
+	inout [31:0]DDR_dq,
+	inout [3:0]DDR_dqs_n,
+	inout [3:0]DDR_dqs_p,
+	inout DDR_odt,
+	inout DDR_ras_n,
+	inout DDR_reset_n,
+	inout DDR_we_n,
+	inout FIXED_IO_ddr_vrn,
+	inout FIXED_IO_ddr_vrp,
+	inout [53:0]FIXED_IO_mio,
+	inout FIXED_IO_ps_clk,
+	inout FIXED_IO_ps_porb,
+	inout FIXED_IO_ps_srstb,
+
+	//pl interface
     input          sys_clk,
 
     output         dac_sleep,
@@ -54,33 +78,35 @@ CLK_Global #(
     .locked(locked)
 ); 
 
-/***************************************************/
-wire        [11:0] cos_wave;
-wire        [11:0] sin_wave;
-wire        [15:0] pha_diff;
-Cordic #
-(
-    .XY_BITS(12),               
-    .PH_BITS(16),               //1~32     
-    .ITERATIONS(16),            //1~32
-    .CORDIC_STYLE("ROTATE"),    //ROTATE  //VECTOR
-    .PHASE_ACC("ON")            //ON      //OFF
-)
-IQ_Gen_u 
-(
-    .clk_in(clk_100m),
-    .RST(1'd0),
-    .x_i(0), 
-    .y_i(0),
-    .phase_in(16'd2356),          //Fre_word = （(2^PH_BITS)/fc）* f   fc：时钟频率   f输出频率
-        
-    .x_o(cos_wave),
-    .y_o(sin_wave),
-    .phase_out(pha_diff)
+wire  [31:0]  gpio_rtl_0_tri_io;
+wire  [31:0]  gpio_rtl_1_tri_io;
+zynq_wrapper  u_zynq_wrapper (
+    .DDR_addr                ( DDR_addr            ),
+    .DDR_ba                  ( DDR_ba              ),
+    .DDR_cas_n               ( DDR_cas_n           ),
+    .DDR_ck_n                ( DDR_ck_n            ),
+    .DDR_ck_p                ( DDR_ck_p            ),
+    .DDR_cke                 ( DDR_cke             ),
+    .DDR_cs_n                ( DDR_cs_n            ),
+    .DDR_dm                  ( DDR_dm              ),
+    .DDR_dq                  ( DDR_dq              ),
+    .DDR_dqs_n               ( DDR_dqs_n           ),
+    .DDR_dqs_p               ( DDR_dqs_p           ),
+    .DDR_odt                 ( DDR_odt             ),
+    .DDR_ras_n               ( DDR_ras_n           ),
+    .DDR_reset_n             ( DDR_reset_n         ),
+    .DDR_we_n                ( DDR_we_n            ),
+    .FIXED_IO_ddr_vrn        ( FIXED_IO_ddr_vrn    ),
+    .FIXED_IO_ddr_vrp        ( FIXED_IO_ddr_vrp    ),
+    .FIXED_IO_mio            ( FIXED_IO_mio        ),
+    .FIXED_IO_ps_clk         ( FIXED_IO_ps_clk     ),
+    .FIXED_IO_ps_porb        ( FIXED_IO_ps_porb    ),
+    .FIXED_IO_ps_srstb       ( FIXED_IO_ps_srstb   ),
+    .gpio_rtl_0_tri_io       ( gpio_rtl_0_tri_io   ),
+    .gpio_rtl_1_tri_io       ( gpio_rtl_1_tri_io   )
 );
-/***************************************************/
 
-///////////////////////////DAC///////////////
+/////////////////DAC/////////////////
 DAC3162_driver DAC3162_driver_u
 (
     .clk_in(clk_100m),
@@ -95,10 +121,10 @@ DAC3162_driver DAC3162_driver_u
     .dac_clk_n(dac_clk_n),
     .dac_sleep(dac_sleep)
 );
-////////////////////////////////////////
+/////////////////////////////////////
 
 /////////////////ADC/////////////////
-(* mark_debug = "true" *) wire [11:0] usr_adc_rd_data;
+wire [11:0] usr_adc_rd_data;
 wire        adc_clk_w;
 BUFG BUFG_clk (
  .O  (   adc_clk_w   ), 
@@ -118,7 +144,7 @@ ADS412x_driver ADS412x_driver_u
     .adc_clk       ( adc_clk_w        ),
     .adc_samp_clk  ( adc_samp_clk     )
 );
-////////////////////////////////////
+/////////////////////////////////////
 
 endmodule
 
