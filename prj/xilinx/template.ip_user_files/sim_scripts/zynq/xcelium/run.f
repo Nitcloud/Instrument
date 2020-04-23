@@ -27,22 +27,11 @@
 -endlib
 -makelib xcelium_lib/xil_defaultlib \
   "../../../bd/zynq/ip/zynq_processing_system7_0_0/sim/zynq_processing_system7_0_0.v" \
--endlib
--makelib xcelium_lib/axi_lite_ipif_v3_0_4 \
-  "../../../../../../user/Hardware/bd/zynq/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd" \
--endlib
--makelib xcelium_lib/lib_cdc_v1_0_2 \
-  "../../../../../../user/Hardware/bd/zynq/ipshared/ef1e/hdl/lib_cdc_v1_0_rfs.vhd" \
--endlib
--makelib xcelium_lib/interrupt_control_v3_1_4 \
-  "../../../../../../user/Hardware/bd/zynq/ipshared/a040/hdl/interrupt_control_v3_1_vh_rfs.vhd" \
--endlib
--makelib xcelium_lib/axi_gpio_v2_0_20 \
-  "../../../../../../user/Hardware/bd/zynq/ipshared/a7c9/hdl/axi_gpio_v2_0_vh_rfs.vhd" \
--endlib
--makelib xcelium_lib/xil_defaultlib \
-  "../../../bd/zynq/ip/zynq_axi_gpio_0_0/sim/zynq_axi_gpio_0_0.vhd" \
-  "../../../bd/zynq/ip/zynq_axi_gpio_1_0/sim/zynq_axi_gpio_1_0.vhd" \
+  "../../../bd/zynq/sim/zynq.v" \
+  "../../../bd/zynq/ip/zynq_AXI_AWG_0_0/sim/zynq_AXI_AWG_0_0.v" \
+  "../../../bd/zynq/ip/zynq_AXI_Modulate_0_0/sim/zynq_AXI_Modulate_0_0.v" \
+  "../../../bd/zynq/ip/zynq_AXI_AWG_0_1/sim/zynq_AXI_AWG_0_1.v" \
+  "../../../bd/zynq/ip/zynq_AXI_Modulate_0_1/sim/zynq_AXI_Modulate_0_1.v" \
 -endlib
 -makelib xcelium_lib/generic_baseblocks_v2_1_0 \
   "../../../../../../user/Hardware/bd/zynq/ipshared/b752/hdl/generic_baseblocks_v2_1_vl_rfs.v" \
@@ -68,11 +57,8 @@
 -makelib xcelium_lib/xil_defaultlib \
   "../../../bd/zynq/ip/zynq_xbar_0/sim/zynq_xbar_0.v" \
 -endlib
--makelib xcelium_lib/axi_protocol_converter_v2_1_18 \
-  "../../../../../../user/Hardware/bd/zynq/ipshared/7a04/hdl/axi_protocol_converter_v2_1_vl_rfs.v" \
--endlib
--makelib xcelium_lib/xil_defaultlib \
-  "../../../bd/zynq/ip/zynq_auto_pc_0/sim/zynq_auto_pc_0.v" \
+-makelib xcelium_lib/lib_cdc_v1_0_2 \
+  "../../../../../../user/Hardware/bd/zynq/ipshared/ef1e/hdl/lib_cdc_v1_0_rfs.vhd" \
 -endlib
 -makelib xcelium_lib/proc_sys_reset_v5_0_13 \
   "../../../../../../user/Hardware/bd/zynq/ipshared/8842/hdl/proc_sys_reset_v5_0_vh_rfs.vhd" \
@@ -80,8 +66,11 @@
 -makelib xcelium_lib/xil_defaultlib \
   "../../../bd/zynq/ip/zynq_rst_ps7_0_50M_0/sim/zynq_rst_ps7_0_50M_0.vhd" \
 -endlib
+-makelib xcelium_lib/axi_protocol_converter_v2_1_18 \
+  "../../../../../../user/Hardware/bd/zynq/ipshared/7a04/hdl/axi_protocol_converter_v2_1_vl_rfs.v" \
+-endlib
 -makelib xcelium_lib/xil_defaultlib \
-  "../../../bd/zynq/sim/zynq.v" \
+  "../../../bd/zynq/ip/zynq_auto_pc_0/sim/zynq_auto_pc_0.v" \
 -endlib
 -makelib xcelium_lib/xil_defaultlib \
   glbl.v

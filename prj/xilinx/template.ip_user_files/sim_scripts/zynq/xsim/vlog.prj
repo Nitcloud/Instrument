@@ -1,8 +1,12 @@
 verilog xil_defaultlib --include "../../../../../../user/Hardware/bd/zynq/ipshared/ec67/hdl" --include "../../../../../../user/Hardware/bd/zynq/ipshared/70cf/hdl" --include "../../../../../../user/Hardware/bd/zynq/ip/zynq_processing_system7_0_0" \
 "../../../bd/zynq/ip/zynq_processing_system7_0_0/sim/zynq_processing_system7_0_0.v" \
+"../../../bd/zynq/sim/zynq.v" \
+"../../../bd/zynq/ip/zynq_AXI_AWG_0_0/sim/zynq_AXI_AWG_0_0.v" \
+"../../../bd/zynq/ip/zynq_AXI_Modulate_0_0/sim/zynq_AXI_Modulate_0_0.v" \
+"../../../bd/zynq/ip/zynq_AXI_AWG_0_1/sim/zynq_AXI_AWG_0_1.v" \
+"../../../bd/zynq/ip/zynq_AXI_Modulate_0_1/sim/zynq_AXI_Modulate_0_1.v" \
 "../../../bd/zynq/ip/zynq_xbar_0/sim/zynq_xbar_0.v" \
 "../../../bd/zynq/ip/zynq_auto_pc_0/sim/zynq_auto_pc_0.v" \
-"../../../bd/zynq/sim/zynq.v" \
 
 verilog xil_defaultlib "glbl.v"
 

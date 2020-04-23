@@ -1,6 +1,6 @@
 `timescale 1 ns / 1 ps
 
-module AXI_AWG #(
+module AXI_FFT #(
 	parameter integer INPUT_WIDTH      	    = 12,
 	parameter integer C_S_AXI_DATA_WIDTH	= 32,
 	parameter integer C_S_AXI_ADDR_WIDTH	= 8

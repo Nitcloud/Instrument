@@ -1,10 +1,10 @@
 -- Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2018.3 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
--- Date        : Sat Apr  4 22:23:33 2020
+-- Date        : Sat Apr  4 22:23:32 2020
 -- Host        : DESKTOP-8P8R3S1 running 64-bit major release  (build 9200)
--- Command     : write_vhdl -force -mode synth_stub
---               d:/project/FPGA/My_FPGA/TCL_project/Prj/Instrument/user/Hardware/bd/zynq/ip/zynq_rst_ps7_0_50M_0/zynq_rst_ps7_0_50M_0_stub.vhdl
+-- Command     : write_vhdl -force -mode synth_stub -rename_top zynq_rst_ps7_0_50M_0 -prefix
+--               zynq_rst_ps7_0_50M_0_ zynq_rst_ps7_0_50M_0_stub.vhdl
 -- Design      : zynq_rst_ps7_0_50M_0
 -- Purpose     : Stub declaration of top-level module interface
 -- Device      : xc7z020clg400-2

@@ -78,9 +78,17 @@ CLK_Global #(
     .locked(locked)
 ); 
 
-wire  [31:0]  gpio_rtl_0_tri_io;
-wire  [31:0]  gpio_rtl_1_tri_io;
+wire  [11:0]  usr_adc_rd_data;
+wire  [11:0]  wave_out_CH0;
+wire  [11:0]  wave_out_CH1;
 zynq_wrapper  u_zynq_wrapper (
+    .Outside_Wave_CH0        ( usr_adc_rd_data     ),
+    .Outside_Wave_CH1        ( usr_adc_rd_data     ),
+    .clk_in                  ( clk_200m            ),
+
+    .wave_out_CH0            ( wave_out_CH0        ),
+    .wave_out_CH1            ( wave_out_CH1        ),
+
     .DDR_addr                ( DDR_addr            ),
     .DDR_ba                  ( DDR_ba              ),
     .DDR_cas_n               ( DDR_cas_n           ),
@@ -101,19 +109,17 @@ zynq_wrapper  u_zynq_wrapper (
     .FIXED_IO_mio            ( FIXED_IO_mio        ),
     .FIXED_IO_ps_clk         ( FIXED_IO_ps_clk     ),
     .FIXED_IO_ps_porb        ( FIXED_IO_ps_porb    ),
-    .FIXED_IO_ps_srstb       ( FIXED_IO_ps_srstb   ),
-    .gpio_rtl_0_tri_io       ( gpio_rtl_0_tri_io   ),
-    .gpio_rtl_1_tri_io       ( gpio_rtl_1_tri_io   )
+    .FIXED_IO_ps_srstb       ( FIXED_IO_ps_srstb   )
 );
 
 /////////////////DAC/////////////////
 DAC3162_driver DAC3162_driver_u
 (
-    .clk_in(clk_100m),
-    .clk_div(clk_50m),
+    .clk_in(clk_200m),
+    .clk_div(clk_100m),
 
-    .DA3162_CH1(cos_wave),
-    .DA3162_CH2(sin_wave),
+    .DA3162_CH1(wave_out_CH0),
+    .DA3162_CH2(wave_out_CH1),
     /*DAC*/
     .dac_data_p(dac_data_p),
     .dac_data_n(dac_data_n),
@@ -124,7 +130,6 @@ DAC3162_driver DAC3162_driver_u
 /////////////////////////////////////
 
 /////////////////ADC/////////////////
-wire [11:0] usr_adc_rd_data;
 wire        adc_clk_w;
 BUFG BUFG_clk (
  .O  (   adc_clk_w   ), 
@@ -132,7 +137,7 @@ BUFG BUFG_clk (
 );
 ADS412x_driver ADS412x_driver_u 
 (
-    .user_clk      ( clk_200m         ),
+    .user_clk      ( clk_100m         ),
     .user_rd_data  ( usr_adc_rd_data  ),
     
     .adc_sclk      ( adc_sclk         ),
