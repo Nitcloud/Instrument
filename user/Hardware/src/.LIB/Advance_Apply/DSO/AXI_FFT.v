@@ -1,6 +1,6 @@
 `timescale 1 ns / 1 ps
 
-module AXI_FFT #(
+module AXI_DSO #(
 	parameter integer INPUT_WIDTH      	    = 12,
 	parameter integer C_S_AXI_DATA_WIDTH	= 32,
 	parameter integer C_S_AXI_ADDR_WIDTH	= 8
@@ -327,26 +327,15 @@ always @(*) begin
 end
   
 // Add user logic here
-wire        done_sig;
-wire        trig_sig = slv_reg0[0];
-wire [23:0] amp_dout;
-wire [31:0] sample_fre = slv_reg1;
-wire [14:0] FFT_addr   = slv_reg2;
+// wire        done_sig;
+// wire        trig_sig = slv_reg0[0];
+// wire [23:0] amp_dout;
+// wire [31:0] sample_fre = slv_reg1;
+// wire [14:0] FFT_addr   = slv_reg2;
 
-FFT_Control M_FFT_Control
-(
-	.clk_Cal(clk_Cal),
-	.clk_AD(clk_AD),
-	.clk_read(axi_rvalid),
-	.rst_n(S_AXI_ARESETN),
-	.start_sig(trig_sig),
-	.sample_fre(sample_fre),
-	.wave_in(wave_in),
-	.FFT_addr(FFT_addr),
-
-	.fft_done(done_sig),
-	.amp_dout(amp_dout)
-);
+// DSO DSO_u
+// (
+// );
 // assign slv_reg3 = {31'd0,done_sig};
 // assign slv_reg4 = {8'd0,amp_dout};
 // User logic ends
