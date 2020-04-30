@@ -12,8 +12,8 @@ preplace portBus Outside_Wave_CH1 -pg 1 -y 840 -defaultsOSRD
 preplace inst rst_ps7_0_50M -pg 1 -lvl 1 -y 740 -defaultsOSRD
 preplace inst AXI_AWG_0 -pg 1 -lvl 3 -y 90 -defaultsOSRD
 preplace inst AXI_AWG_1 -pg 1 -lvl 3 -y 270 -defaultsOSRD
-preplace inst ps7_0_axi_periph -pg 1 -lvl 2 -y 590 -defaultsOSRD
 preplace inst AXI_Modulate_0 -pg 1 -lvl 3 -y 630 -defaultsOSRD
+preplace inst ps7_0_axi_periph -pg 1 -lvl 2 -y 590 -defaultsOSRD
 preplace inst AXI_Modulate_1 -pg 1 -lvl 3 -y 830 -defaultsOSRD
 preplace inst processing_system7_0 -pg 1 -lvl 1 -y 410 -defaultsOSRD
 preplace netloc ps7_0_axi_periph_M02_AXI 1 2 1 780

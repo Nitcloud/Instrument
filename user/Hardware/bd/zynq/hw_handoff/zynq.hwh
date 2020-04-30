@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Thu Apr 23 17:49:11 2020" VIVADOVERSION="2018.3">
+<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Thu Apr 30 14:40:00 2020" VIVADOVERSION="2018.3">
 
   <SYSTEMINFO ARCH="zynq" DEVICE="7z020" NAME="zynq" PACKAGE="clg400" SPEEDGRADE="-2"/>
 
@@ -30,36 +30,6 @@
     <PORT DIR="I" LEFT="11" NAME="Outside_Wave_CH1" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_Outside_Wave_CH1">
       <CONNECTIONS>
         <CONNECTION INSTANCE="AXI_Modulate_1" PORT="Outside_Wave"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="IO" LEFT="53" NAME="FIXED_IO_mio" RIGHT="0" SIGIS="undef" SIGNAME="processing_system7_0_MIO">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="processing_system7_0" PORT="MIO"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="IO" NAME="FIXED_IO_ddr_vrn" SIGIS="undef" SIGNAME="processing_system7_0_DDR_VRN">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="processing_system7_0" PORT="DDR_VRN"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="IO" NAME="FIXED_IO_ddr_vrp" SIGIS="undef" SIGNAME="processing_system7_0_DDR_VRP">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="processing_system7_0" PORT="DDR_VRP"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="IO" NAME="FIXED_IO_ps_srstb" SIGIS="undef" SIGNAME="processing_system7_0_PS_SRSTB">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="processing_system7_0" PORT="PS_SRSTB"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="IO" NAME="FIXED_IO_ps_clk" SIGIS="undef" SIGNAME="processing_system7_0_PS_CLK">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="processing_system7_0" PORT="PS_CLK"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="IO" NAME="FIXED_IO_ps_porb" SIGIS="undef" SIGNAME="processing_system7_0_PS_PORB">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="processing_system7_0" PORT="PS_PORB"/>
       </CONNECTIONS>
     </PORT>
     <PORT DIR="IO" NAME="DDR_cas_n" SIGIS="undef" SIGNAME="processing_system7_0_DDR_CAS_n">
@@ -135,6 +105,36 @@
     <PORT DIR="IO" LEFT="3" NAME="DDR_dqs_p" RIGHT="0" SIGIS="undef" SIGNAME="processing_system7_0_DDR_DQS">
       <CONNECTIONS>
         <CONNECTION INSTANCE="processing_system7_0" PORT="DDR_DQS"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="IO" LEFT="53" NAME="FIXED_IO_mio" RIGHT="0" SIGIS="undef" SIGNAME="processing_system7_0_MIO">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="processing_system7_0" PORT="MIO"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="IO" NAME="FIXED_IO_ddr_vrn" SIGIS="undef" SIGNAME="processing_system7_0_DDR_VRN">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="processing_system7_0" PORT="DDR_VRN"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="IO" NAME="FIXED_IO_ddr_vrp" SIGIS="undef" SIGNAME="processing_system7_0_DDR_VRP">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="processing_system7_0" PORT="DDR_VRP"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="IO" NAME="FIXED_IO_ps_srstb" SIGIS="undef" SIGNAME="processing_system7_0_PS_SRSTB">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="processing_system7_0" PORT="PS_SRSTB"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="IO" NAME="FIXED_IO_ps_clk" SIGIS="undef" SIGNAME="processing_system7_0_PS_CLK">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="processing_system7_0" PORT="PS_CLK"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="IO" NAME="FIXED_IO_ps_porb" SIGIS="undef" SIGNAME="processing_system7_0_PS_PORB">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="processing_system7_0" PORT="PS_PORB"/>
       </CONNECTIONS>
     </PORT>
   </EXTERNALPORTS>
@@ -2112,12 +2112,12 @@
             <CONNECTION INSTANCE="AXI_AWG_0" PORT="S_AXI_ACLK"/>
             <CONNECTION INSTANCE="ps7_0_axi_periph" PORT="M00_ACLK"/>
             <CONNECTION INSTANCE="ps7_0_axi_periph" PORT="ACLK"/>
-            <CONNECTION INSTANCE="AXI_Modulate_0" PORT="S_AXI_ACLK"/>
             <CONNECTION INSTANCE="ps7_0_axi_periph" PORT="M01_ACLK"/>
             <CONNECTION INSTANCE="AXI_AWG_1" PORT="S_AXI_ACLK"/>
             <CONNECTION INSTANCE="ps7_0_axi_periph" PORT="M02_ACLK"/>
-            <CONNECTION INSTANCE="AXI_Modulate_1" PORT="S_AXI_ACLK"/>
             <CONNECTION INSTANCE="ps7_0_axi_periph" PORT="M03_ACLK"/>
+            <CONNECTION INSTANCE="AXI_Modulate_0" PORT="S_AXI_ACLK"/>
+            <CONNECTION INSTANCE="AXI_Modulate_1" PORT="S_AXI_ACLK"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="O" NAME="FCLK_RESET0_N" SIGIS="rst" SIGNAME="processing_system7_0_FCLK_RESET0_N">
@@ -3041,12 +3041,12 @@
             <CONNECTION INSTANCE="AXI_Modulate_0" PORT="S_AXI_AWPROT"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" LEFT="0" NAME="M01_AXI_awvalid" RIGHT="0" SIGIS="undef" SIGNAME="AXI_Modulate_0_S_AXI_AWVALID">
+        <PORT DIR="O" NAME="M01_AXI_awvalid" SIGIS="undef" SIGNAME="AXI_Modulate_0_S_AXI_AWVALID">
           <CONNECTIONS>
             <CONNECTION INSTANCE="AXI_Modulate_0" PORT="S_AXI_AWVALID"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="0" NAME="M01_AXI_awready" RIGHT="0" SIGIS="undef" SIGNAME="AXI_Modulate_0_S_AXI_AWREADY">
+        <PORT DIR="I" NAME="M01_AXI_awready" SIGIS="undef" SIGNAME="AXI_Modulate_0_S_AXI_AWREADY">
           <CONNECTIONS>
             <CONNECTION INSTANCE="AXI_Modulate_0" PORT="S_AXI_AWREADY"/>
           </CONNECTIONS>
@@ -3061,12 +3061,12 @@
             <CONNECTION INSTANCE="AXI_Modulate_0" PORT="S_AXI_WSTRB"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" LEFT="0" NAME="M01_AXI_wvalid" RIGHT="0" SIGIS="undef" SIGNAME="AXI_Modulate_0_S_AXI_WVALID">
+        <PORT DIR="O" NAME="M01_AXI_wvalid" SIGIS="undef" SIGNAME="AXI_Modulate_0_S_AXI_WVALID">
           <CONNECTIONS>
             <CONNECTION INSTANCE="AXI_Modulate_0" PORT="S_AXI_WVALID"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="0" NAME="M01_AXI_wready" RIGHT="0" SIGIS="undef" SIGNAME="AXI_Modulate_0_S_AXI_WREADY">
+        <PORT DIR="I" NAME="M01_AXI_wready" SIGIS="undef" SIGNAME="AXI_Modulate_0_S_AXI_WREADY">
           <CONNECTIONS>
             <CONNECTION INSTANCE="AXI_Modulate_0" PORT="S_AXI_WREADY"/>
           </CONNECTIONS>
@@ -3076,12 +3076,12 @@
             <CONNECTION INSTANCE="AXI_Modulate_0" PORT="S_AXI_BRESP"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="0" NAME="M01_AXI_bvalid" RIGHT="0" SIGIS="undef" SIGNAME="AXI_Modulate_0_S_AXI_BVALID">
+        <PORT DIR="I" NAME="M01_AXI_bvalid" SIGIS="undef" SIGNAME="AXI_Modulate_0_S_AXI_BVALID">
           <CONNECTIONS>
             <CONNECTION INSTANCE="AXI_Modulate_0" PORT="S_AXI_BVALID"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" LEFT="0" NAME="M01_AXI_bready" RIGHT="0" SIGIS="undef" SIGNAME="AXI_Modulate_0_S_AXI_BREADY">
+        <PORT DIR="O" NAME="M01_AXI_bready" SIGIS="undef" SIGNAME="AXI_Modulate_0_S_AXI_BREADY">
           <CONNECTIONS>
             <CONNECTION INSTANCE="AXI_Modulate_0" PORT="S_AXI_BREADY"/>
           </CONNECTIONS>
@@ -3096,12 +3096,12 @@
             <CONNECTION INSTANCE="AXI_Modulate_0" PORT="S_AXI_ARPROT"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" LEFT="0" NAME="M01_AXI_arvalid" RIGHT="0" SIGIS="undef" SIGNAME="AXI_Modulate_0_S_AXI_ARVALID">
+        <PORT DIR="O" NAME="M01_AXI_arvalid" SIGIS="undef" SIGNAME="AXI_Modulate_0_S_AXI_ARVALID">
           <CONNECTIONS>
             <CONNECTION INSTANCE="AXI_Modulate_0" PORT="S_AXI_ARVALID"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="0" NAME="M01_AXI_arready" RIGHT="0" SIGIS="undef" SIGNAME="AXI_Modulate_0_S_AXI_ARREADY">
+        <PORT DIR="I" NAME="M01_AXI_arready" SIGIS="undef" SIGNAME="AXI_Modulate_0_S_AXI_ARREADY">
           <CONNECTIONS>
             <CONNECTION INSTANCE="AXI_Modulate_0" PORT="S_AXI_ARREADY"/>
           </CONNECTIONS>
@@ -3116,12 +3116,12 @@
             <CONNECTION INSTANCE="AXI_Modulate_0" PORT="S_AXI_RRESP"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="0" NAME="M01_AXI_rvalid" RIGHT="0" SIGIS="undef" SIGNAME="AXI_Modulate_0_S_AXI_RVALID">
+        <PORT DIR="I" NAME="M01_AXI_rvalid" SIGIS="undef" SIGNAME="AXI_Modulate_0_S_AXI_RVALID">
           <CONNECTIONS>
             <CONNECTION INSTANCE="AXI_Modulate_0" PORT="S_AXI_RVALID"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" LEFT="0" NAME="M01_AXI_rready" RIGHT="0" SIGIS="undef" SIGNAME="AXI_Modulate_0_S_AXI_RREADY">
+        <PORT DIR="O" NAME="M01_AXI_rready" SIGIS="undef" SIGNAME="AXI_Modulate_0_S_AXI_RREADY">
           <CONNECTIONS>
             <CONNECTION INSTANCE="AXI_Modulate_0" PORT="S_AXI_RREADY"/>
           </CONNECTIONS>
@@ -3231,12 +3231,12 @@
             <CONNECTION INSTANCE="AXI_Modulate_1" PORT="S_AXI_AWPROT"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" LEFT="0" NAME="M03_AXI_awvalid" RIGHT="0" SIGIS="undef" SIGNAME="AXI_Modulate_1_S_AXI_AWVALID">
+        <PORT DIR="O" NAME="M03_AXI_awvalid" SIGIS="undef" SIGNAME="AXI_Modulate_1_S_AXI_AWVALID">
           <CONNECTIONS>
             <CONNECTION INSTANCE="AXI_Modulate_1" PORT="S_AXI_AWVALID"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="0" NAME="M03_AXI_awready" RIGHT="0" SIGIS="undef" SIGNAME="AXI_Modulate_1_S_AXI_AWREADY">
+        <PORT DIR="I" NAME="M03_AXI_awready" SIGIS="undef" SIGNAME="AXI_Modulate_1_S_AXI_AWREADY">
           <CONNECTIONS>
             <CONNECTION INSTANCE="AXI_Modulate_1" PORT="S_AXI_AWREADY"/>
           </CONNECTIONS>
@@ -3251,12 +3251,12 @@
             <CONNECTION INSTANCE="AXI_Modulate_1" PORT="S_AXI_WSTRB"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" LEFT="0" NAME="M03_AXI_wvalid" RIGHT="0" SIGIS="undef" SIGNAME="AXI_Modulate_1_S_AXI_WVALID">
+        <PORT DIR="O" NAME="M03_AXI_wvalid" SIGIS="undef" SIGNAME="AXI_Modulate_1_S_AXI_WVALID">
           <CONNECTIONS>
             <CONNECTION INSTANCE="AXI_Modulate_1" PORT="S_AXI_WVALID"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="0" NAME="M03_AXI_wready" RIGHT="0" SIGIS="undef" SIGNAME="AXI_Modulate_1_S_AXI_WREADY">
+        <PORT DIR="I" NAME="M03_AXI_wready" SIGIS="undef" SIGNAME="AXI_Modulate_1_S_AXI_WREADY">
           <CONNECTIONS>
             <CONNECTION INSTANCE="AXI_Modulate_1" PORT="S_AXI_WREADY"/>
           </CONNECTIONS>
@@ -3266,12 +3266,12 @@
             <CONNECTION INSTANCE="AXI_Modulate_1" PORT="S_AXI_BRESP"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="0" NAME="M03_AXI_bvalid" RIGHT="0" SIGIS="undef" SIGNAME="AXI_Modulate_1_S_AXI_BVALID">
+        <PORT DIR="I" NAME="M03_AXI_bvalid" SIGIS="undef" SIGNAME="AXI_Modulate_1_S_AXI_BVALID">
           <CONNECTIONS>
             <CONNECTION INSTANCE="AXI_Modulate_1" PORT="S_AXI_BVALID"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" LEFT="0" NAME="M03_AXI_bready" RIGHT="0" SIGIS="undef" SIGNAME="AXI_Modulate_1_S_AXI_BREADY">
+        <PORT DIR="O" NAME="M03_AXI_bready" SIGIS="undef" SIGNAME="AXI_Modulate_1_S_AXI_BREADY">
           <CONNECTIONS>
             <CONNECTION INSTANCE="AXI_Modulate_1" PORT="S_AXI_BREADY"/>
           </CONNECTIONS>
@@ -3286,12 +3286,12 @@
             <CONNECTION INSTANCE="AXI_Modulate_1" PORT="S_AXI_ARPROT"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" LEFT="0" NAME="M03_AXI_arvalid" RIGHT="0" SIGIS="undef" SIGNAME="AXI_Modulate_1_S_AXI_ARVALID">
+        <PORT DIR="O" NAME="M03_AXI_arvalid" SIGIS="undef" SIGNAME="AXI_Modulate_1_S_AXI_ARVALID">
           <CONNECTIONS>
             <CONNECTION INSTANCE="AXI_Modulate_1" PORT="S_AXI_ARVALID"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="0" NAME="M03_AXI_arready" RIGHT="0" SIGIS="undef" SIGNAME="AXI_Modulate_1_S_AXI_ARREADY">
+        <PORT DIR="I" NAME="M03_AXI_arready" SIGIS="undef" SIGNAME="AXI_Modulate_1_S_AXI_ARREADY">
           <CONNECTIONS>
             <CONNECTION INSTANCE="AXI_Modulate_1" PORT="S_AXI_ARREADY"/>
           </CONNECTIONS>
@@ -3306,12 +3306,12 @@
             <CONNECTION INSTANCE="AXI_Modulate_1" PORT="S_AXI_RRESP"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="0" NAME="M03_AXI_rvalid" RIGHT="0" SIGIS="undef" SIGNAME="AXI_Modulate_1_S_AXI_RVALID">
+        <PORT DIR="I" NAME="M03_AXI_rvalid" SIGIS="undef" SIGNAME="AXI_Modulate_1_S_AXI_RVALID">
           <CONNECTIONS>
             <CONNECTION INSTANCE="AXI_Modulate_1" PORT="S_AXI_RVALID"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" LEFT="0" NAME="M03_AXI_rready" RIGHT="0" SIGIS="undef" SIGNAME="AXI_Modulate_1_S_AXI_RREADY">
+        <PORT DIR="O" NAME="M03_AXI_rready" SIGIS="undef" SIGNAME="AXI_Modulate_1_S_AXI_RREADY">
           <CONNECTIONS>
             <CONNECTION INSTANCE="AXI_Modulate_1" PORT="S_AXI_RREADY"/>
           </CONNECTIONS>
@@ -3497,12 +3497,12 @@
             <CONNECTION INSTANCE="AXI_AWG_0" PORT="S_AXI_ARESETN"/>
             <CONNECTION INSTANCE="ps7_0_axi_periph" PORT="M00_ARESETN"/>
             <CONNECTION INSTANCE="ps7_0_axi_periph" PORT="ARESETN"/>
-            <CONNECTION INSTANCE="AXI_Modulate_0" PORT="S_AXI_ARESETN"/>
             <CONNECTION INSTANCE="ps7_0_axi_periph" PORT="M01_ARESETN"/>
             <CONNECTION INSTANCE="AXI_AWG_1" PORT="S_AXI_ARESETN"/>
             <CONNECTION INSTANCE="ps7_0_axi_periph" PORT="M02_ARESETN"/>
-            <CONNECTION INSTANCE="AXI_Modulate_1" PORT="S_AXI_ARESETN"/>
             <CONNECTION INSTANCE="ps7_0_axi_periph" PORT="M03_ARESETN"/>
+            <CONNECTION INSTANCE="AXI_Modulate_0" PORT="S_AXI_ARESETN"/>
+            <CONNECTION INSTANCE="AXI_Modulate_1" PORT="S_AXI_ARESETN"/>
           </CONNECTIONS>
         </PORT>
       </PORTS>
