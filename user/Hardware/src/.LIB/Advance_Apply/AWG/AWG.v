@@ -12,7 +12,7 @@ module AWG #(
 	input  [OUTPUT_WIDTH - 1 : 0]   DC_Value,
 	input  [2:0]					AWG_Type,
 
-	input  [OUTPUT_WIDTH - 1 : 0]   AWG_OUT
+	output [OUTPUT_WIDTH - 1 : 0]   AWG_OUT
 );
 
 wire  [OUTPUT_WIDTH - 1 : 0]  wave_out_sin;
@@ -61,6 +61,11 @@ MUX4_1 #(
 
 	.CH_out                  ( CH_out       )
 );
-assign AWG = $signed(($signed(CH_out) * $signed(Amp_word)) >> OUTPUT_WIDTH) + $signed(DC_Value);
+
+wire [2*OUTPUT_WIDTH - 1 : 0] AWG_OUT_test0;
+wire [OUTPUT_WIDTH - 1 : 0]   AWG_OUT_test1;
+assign AWG_OUT_test0 = $signed(CH_out) * $signed({1'b0,Amp_word});
+assign AWG_OUT_test1 = AWG_OUT_test0 >> OUTPUT_WIDTH;
+assign AWG_OUT       = $signed(AWG_OUT_test1) + $signed(DC_Value);
 
 endmodule  //Function_Gen

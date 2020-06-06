@@ -34,7 +34,8 @@ MUX2_1 #(
     .CH_out                  ( Wave_IN      )
 );
 
-wire 	FM_RST = RST & Sel[1];
+wire FM_RST = RST | Sel[1];
+wire [OUTPUT_WIDTH-1:0] FM_wave;
 FM_Modulate #(
     .INPUT_WIDTH  ( INPUT_WIDTH ),
     .PHASE_WIDTH  ( PHASE_WIDTH ),
@@ -49,7 +50,8 @@ FM_Modulate #(
     .FM_wave                 ( FM_wave       )
 );
 
-wire 	AM_RST = RST & (~Sel[1]);
+wire 	AM_RST = RST | (~Sel[1]);
+wire [OUTPUT_WIDTH-1:0] AM_wave;
 AM_Modulate #(
     .PHASE_WIDTH  ( PHASE_WIDTH  ),
 	.DEEP_WIDTH   ( DEEP_WIDTH   ),
@@ -82,12 +84,12 @@ MUX2_1 #(
     .INPUT_WIDTH  ( OUTPUT_WIDTH ),
     .OUTPUT_WIDTH ( OUTPUT_WIDTH )
 ) u3_MUX2_1 (
-	.RST                     ( RST           ),
-	.Sel                     ( Sel[2]|Sel[0] ),
-	.CH_IN1                  ( Inside_Wave   ),
-	.CH_IN2                  ( Modulate_OUT  ),
+	.RST                     ( RST                ),
+	.Sel                     ( (Sel[2]|Sel[0])    ),
+	.CH_IN1                  ( {Inside_Wave,2'd0} ),
+	.CH_IN2                  ( Modulate_OUT       ),
 
-	.CH_out                  ( wave_out      )
+	.CH_out                  ( wave_out           )
 );
 
 endmodule  //Modulate
